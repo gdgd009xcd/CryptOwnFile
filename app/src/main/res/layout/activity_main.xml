@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- 10行固定・スクロールバー付きのテキストエリア（入力欄） -->
+    <EditText
+        android:id="@+id/editTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="ここに暗号化したいテキストを入力（複数行対応）"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:gravity="top|start"
+        android:scrollbars="vertical" />
+
+    <!-- 暗号化を実行してファイルに保存するボタン -->
+    <Button
+        android:id="@+id/buttonEncrypt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="暗号化してローカルに保存" />
+
+    <!-- ファイルから読み込んで元のテキストに戻すボタン -->
+    <Button
+        android:id="@+id/buttonDecrypt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="ファイルから読み込んで復号" />
+
+    <!-- 現在の状態や、暗号化・復号の結果を表示するテキストラベル -->
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="結果がここに表示されます"
+        android:textSize="16sp" />
+
+</LinearLayout>
