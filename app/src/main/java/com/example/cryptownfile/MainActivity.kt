@@ -25,7 +25,6 @@ const val DATA_FILE_NAME = "dumb.dat"
 class MainActivity : AppCompatActivity() {
 
     // 保存するファイル名
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
