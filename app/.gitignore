@@ -1,1 +1,3 @@
-/build
+build/
+release/
+release/app-release.apk
