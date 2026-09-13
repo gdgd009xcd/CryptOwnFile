@@ -4,7 +4,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:padding="20dp"
-android:weightSum="10"
+android:weightSum="100"
 >
 
 <!-- タイトル -->
@@ -21,7 +21,7 @@ android:weightSum="10"
     android:id="@+id/editTextResultFull"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="8"
+    android:layout_weight="90"
     android:text="ここに結果が表示されます"
     android:textSize="16sp"
     android:scrollbars="vertical"
@@ -39,15 +39,6 @@ android:weightSum="10"
         android:backgroundTint="#4CAF50"
         android:textColor="#FFFFFF" />
 
-<!-- ファイル即時削除ボタン -->
-<Button
-    android:id="@+id/buttonDeleteFile"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="15dp"
-    android:text="暗号化ファイルを即時削除"
-    android:backgroundTint="#D32F2F"
-    android:textColor="#FFFFFF" />
 
 <!-- 閉じるボタン -->
 <Button
@@ -62,7 +53,7 @@ android:weightSum="10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:lines="3"
+        android:lines="2"
         android:text="結果がここに表示されます"
         android:textSize="16sp" />
 </LinearLayout>

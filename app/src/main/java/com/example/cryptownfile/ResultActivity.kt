@@ -1,6 +1,7 @@
 package com.example.cryptownfile
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -16,8 +17,10 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
 
+        // prevent screenshot.
+        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
         val editTextResultFull = findViewById<EditText>(R.id.editTextResultFull)
-        val buttonDeleteFile = findViewById<Button>(R.id.buttonDeleteFile)
         val buttonClose = findViewById<Button>(R.id.buttonClose)
         val textViewResultMessage = findViewById<TextView>(R.id.textViewResultMessage)
         val buttonOverwriteSave = findViewById<Button>(R.id.buttonOverwriteSave)
@@ -25,13 +28,19 @@ class ResultActivity : AppCompatActivity() {
         // スクロールを有効化　if this is TextView. EditText doesn't need this code.
         // textViewResultFull.movementMethod = ScrollingMovementMethod()
 
-        // メイン画面から渡されたテキストを受け取って表示
-        val resultText = intent.getStringExtra("RESULT_TEXT") ?: "データがありません"
-        editTextResultFull.setText(resultText)
+        // retrieve fileName from Previous Activity
+        val fileName = intent.getStringExtra("FILE_NAME")
+        if (fileName != null) {
+            val file = File(Utils.getOwnFolder(this), fileName)
+            val resultText = Utils.openFile(file, this)
+            editTextResultFull.setText(resultText)
+        }
+
 
         // 【削除ボタン】の処理：ダイアログなしで即時削除
+        /*
         buttonDeleteFile.setOnClickListener {
-            val file = File(this.filesDir, DATA_FILE_NAME)
+            val file = File(Utils.getOwnFolder(this), DATA_FILE_NAME)
             if (file.exists()) {
                 val deleted = file.delete()
                 if (deleted) {
@@ -62,7 +71,7 @@ class ResultActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "削除するファイルが存在しません", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
 
         buttonOverwriteSave.setOnClickListener {
             val editedText = editTextResultFull.text.toString()
@@ -73,30 +82,22 @@ class ResultActivity : AppCompatActivity() {
 
             try {
 
-                // 1. 新しいテキストを暗号化
-                val cipher = Cipher.getInstance(TRANSFORMATION)
-                cipher.init(Cipher.ENCRYPT_MODE, CryptoManager.getOrCreateSecretKey())
-
-                val ivBytes = cipher.iv
-                val encryptedBytes = cipher.doFinal(editedText.toByteArray(Charsets.UTF_8))
-
                 // 2. 暗号化ファイルへの上書き処理
-                val file = File(this.filesDir, DATA_FILE_NAME)
+                val file = File(Utils.getOwnFolder(this), fileName)
 
                 // 安全のため、既にファイルが存在する場合は一度確実に削除する
                 if (file.exists()) {
                     file.delete()
                 }
 
-                // 新しく暗号化データを書き込む
-                file.outputStream().use { output ->
-                    output.write(ivBytes.size) // IVサイズ
-                    output.write(ivBytes)      // IV本体
-                    output.write(encryptedBytes) // 暗号化データ
-                }
+                if (Utils.saveFile(file, editedText, textViewResultMessage)) {
 
-                Toast.makeText(this, "編集内容を暗号化して上書き保存しました", Toast.LENGTH_SHORT).show()
-                textViewResultMessage.text = "上書き保存完了"
+                    Toast.makeText(
+                        this,
+                        "編集内容を暗号化して上書き保存しました",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
 
