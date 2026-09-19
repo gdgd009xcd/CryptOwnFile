@@ -62,7 +62,7 @@ class FileManager : AppCompatActivity() {
 
             // open file.
             if (!saveMode && selectedFileLocal != null) {
-                val intent = android.content.Intent(this, ResultActivity::class.java).apply {
+                val intent = android.content.Intent(this, ViewActivity::class.java).apply {
                     putExtra("FILE_NAME", selectedFileLocal.name)
                 }
                 startActivity(intent)
@@ -120,7 +120,7 @@ class FileManager : AppCompatActivity() {
                 }
             } else if (selectedFileLocal != null) {
                 // open file.
-                val intent = android.content.Intent(this, ResultActivity::class.java).apply {
+                val intent = android.content.Intent(this, ViewActivity::class.java).apply {
                     putExtra("FILE_NAME", selectedFileLocal.name)
                 }
                 startActivity(intent)

@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ResultActivity" android:exported="false" />
+        <activity android:name=".ViewActivity" android:exported="false" />
         <activity android:name=".FileManager" android:exported="false" />
     </application>
 
